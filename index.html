@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dupla Filmes — Filmes de Casamento</title>
+<meta name="description" content="Dupla Filmes. Um casal contando a história de outro casal. Filmes de casamento para sentir tudo de novo.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy-deep:  #050B14;
+    --navy:       #0A1C30;
+    --navy-soft:  #112B47;
+    --royal:      #1577B5;
+    --cream:      #E8D9B5;
+    --cream-soft: #F2E9D2;
+    --white:      #FFFFFF;
+    --ink-soft:   #B9C5D4;
+    --line:       rgba(232,217,181,0.16);
+
+    --display: 'Cormorant Garamond', serif;
+    --body: 'Manrope', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--navy-deep);
+    color:var(--white);
+    font-family:var(--body);
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+  a{ color:inherit; text-decoration:none; }
+  img, video{ max-width:100%; display:block; }
+  section{ position:relative; }
+  .wrap{ max-width:1140px; margin:0 auto; padding:0 28px; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--cream);
+    outline-offset:3px;
+  }
+
+  ::selection{ background:var(--cream); color:var(--navy-deep); }
+
+  /* ===================== NAV ===================== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(5,11,20,0.86);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px; max-width:1140px; margin:0 auto;
+  }
+  .brand-logo{ height:34px; opacity:0.96; }
+  .nav-links{
+    display:flex; align-items:center; gap:34px; font-size:0.82rem; font-weight:600;
+    letter-spacing:0.05em; text-transform:uppercase;
+  }
+  .nav-links a{ color:var(--white); transition:color .25s; position:relative; }
+  .nav-links a:not(.nav-cta)::after{
+    content:""; position:absolute; left:0; bottom:-6px; width:0; height:1px;
+    background:var(--cream); transition:width .25s;
+  }
+  .nav-links a:not(.nav-cta):hover::after{ width:100%; }
+  .nav-links a:not(.nav-cta):hover{ color:var(--cream); }
+  .nav-cta{
+    background:var(--cream); color:var(--navy-deep) !important; padding:10px 22px;
+    font-size:0.78rem; letter-spacing:0.04em; font-weight:700;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .nav-cta:hover{ background:var(--white); }
+  .nav-toggle{ display:none; background:none; border:none; color:var(--white); font-size:1.6rem; cursor:pointer; }
+
+  @media (max-width:900px){
+    .nav-links{
+      position:fixed; top:64px; left:0; right:0; flex-direction:column; gap:0; align-items:stretch;
+      background:var(--navy); border-bottom:1px solid var(--line);
+      max-height:0; overflow:hidden; transition:max-height .35s ease;
+    }
+    .nav-links.open{ max-height:480px; }
+    .nav-links a{ padding:18px 28px; border-top:1px solid var(--line); }
+    .nav-cta{ margin:16px 28px; justify-content:center; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ===================== HERO ===================== */
+  .hero{
+    min-height:100vh; display:flex; align-items:flex-end;
+    position:relative; overflow:hidden;
+    padding:150px 28px 90px;
+  }
+  .hero-bg{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+  .hero-bg video{
+    width:100%; height:100%; object-fit:cover;
+    filter:saturate(0.9) brightness(0.62);
+  }
+  .hero-bg::after{
+    content:""; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(5,11,20,0.55) 0%, rgba(5,11,20,0.30) 38%, rgba(5,11,20,0.88) 100%),
+      linear-gradient(90deg, rgba(5,11,20,0.55), transparent 55%);
+  }
+  .hero-inner{ position:relative; z-index:2; max-width:660px; }
+  .eyebrow{
+    font-size:0.78rem; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--cream); font-weight:700; margin-bottom:20px;
+    opacity:0; animation:riseIn .8s ease forwards; animation-delay:.15s;
+  }
+  .hero h1{
+    font-family:var(--display); font-weight:500; font-style:italic;
+    font-size:clamp(2.4rem, 5.6vw, 4.1rem); line-height:1.12;
+    color:var(--white); letter-spacing:-0.005em;
+    opacity:0; animation:riseIn .9s ease forwards; animation-delay:.3s;
+  }
+  .hero h1 em{ color:var(--cream); font-style:italic; }
+  .hero p.lede{
+    margin-top:22px; font-size:1.06rem; color:var(--ink-soft); max-width:480px;
+    opacity:0; animation:riseIn .9s ease forwards; animation-delay:.45s;
+  }
+  .hero-ctas{
+    margin-top:36px; display:flex; gap:16px; flex-wrap:wrap;
+    opacity:0; animation:riseIn .9s ease forwards; animation-delay:.6s;
+  }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(16px);} to{ opacity:1; transform:translateY(0);} }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:16px 30px;
+    border-radius:2px; font-weight:700; font-size:0.82rem; letter-spacing:0.05em;
+    text-transform:uppercase; transition:transform .25s, box-shadow .25s, background .25s, color .25s, border-color .25s;
+    cursor:pointer; border:1px solid transparent;
+  }
+  .btn-cream{ background:var(--cream); color:var(--navy-deep); }
+  .btn-cream:hover{ background:var(--white); transform:translateY(-2px); box-shadow:0 12px 26px rgba(0,0,0,0.35); }
+  .btn-line{ background:transparent; color:var(--white); border-color:rgba(255,255,255,0.4); }
+  .btn-line:hover{ border-color:var(--cream); color:var(--cream); }
+  .btn-whatsapp{ background:#16895A; color:#fff; }
+  .btn-whatsapp:hover{ background:#1CA770; transform:translateY(-2px); box-shadow:0 12px 26px rgba(22,137,90,0.35); }
+  .btn svg{ width:18px; height:18px; flex-shrink:0; }
+
+  /* ===================== SECTION HEADS ===================== */
+  .section-head{ text-align:center; max-width:680px; margin:0 auto 56px; }
+  .section-head .eyebrow{ display:block; opacity:1; animation:none; }
+  .section-head h2{
+    font-family:var(--display); font-weight:500; font-style:italic;
+    font-size:clamp(2rem, 4.5vw, 2.9rem); color:var(--white); margin-top:8px;
+  }
+  .section-head p{ margin-top:16px; color:var(--ink-soft); font-size:1.02rem; }
+
+  section{ padding:108px 0; }
+  .bg-soft{ background:var(--navy); }
+
+  .stroke-rule{
+    width:64px; height:1px; background:var(--cream); margin:0 auto 22px;
+    opacity:0.6;
+  }
+
+  /* ===================== NOSSA HISTÓRIA ===================== */
+  #historia .story-grid{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center;
+  }
+  .story-photo{
+    aspect-ratio:4/5; overflow:hidden; position:relative;
+  }
+  .story-photo img{ width:100%; height:100%; object-fit:cover; }
+  .story-photo::after{
+    content:""; position:absolute; inset:14px; border:1px solid rgba(232,217,181,0.35); pointer-events:none;
+  }
+  .story-text p{ color:var(--ink-soft); font-size:1.05rem; margin-bottom:20px; }
+  .story-text p strong{ color:var(--cream); font-weight:600; }
+  .story-signoff{
+    font-family:var(--display); font-style:italic; font-size:1.4rem; color:var(--cream);
+    margin-top:8px;
+  }
+  .story-pull{
+    font-family:var(--display); font-style:italic; font-weight:500;
+    font-size:clamp(1.5rem, 3.2vw, 2.1rem); color:var(--white);
+    text-align:center; max-width:780px; margin:0 auto; line-height:1.4;
+    padding:70px 28px; position:relative;
+  }
+  .story-pull::before, .story-pull::after{
+    content:""; display:block; width:34px; height:1px; background:var(--cream); margin:0 auto 22px; opacity:.7;
+  }
+  .story-pull::after{ margin:22px auto 0; }
+
+  @media (max-width:880px){
+    #historia .story-grid{ grid-template-columns:1fr; gap:40px; }
+  }
+
+  /* photo trio */
+  .photo-trio{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:64px;
+  }
+  .photo-trio img{ width:100%; aspect-ratio:4/5; object-fit:cover; }
+  @media (max-width:760px){ .photo-trio{ grid-template-columns:1fr; max-width:380px; margin:48px auto 0; } }
+
+  /* ===================== VALORES (princípios, não pacotes) ===================== */
+  .values-strip{ display:grid; grid-template-columns:repeat(3,1fr); gap:36px; }
+  .value-item{ border-top:1px solid var(--cream); padding-top:20px; }
+  .value-item h4{ font-family:var(--display); font-style:italic; font-weight:500; font-size:1.4rem; color:var(--cream); margin-bottom:10px; }
+  .value-item p{ color:var(--ink-soft); font-size:0.95rem; }
+  @media (max-width:880px){ .values-strip{ grid-template-columns:1fr; gap:28px; } }
+
+  /* ===================== PORTFÓLIO / VÍDEOS ===================== */
+  .video-tabs{ display:flex; gap:10px; justify-content:center; margin-bottom:40px; flex-wrap:wrap; }
+  .video-tab{
+    background:transparent; border:1px solid var(--line); color:var(--ink-soft);
+    padding:10px 22px; font-family:var(--body); font-weight:600; font-size:0.8rem;
+    letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; transition:all .2s;
+  }
+  .video-tab.active{ background:var(--cream); color:var(--navy-deep); border-color:var(--cream); }
+  .video-tab:hover:not(.active){ border-color:var(--cream); color:var(--cream); }
+
+  .video-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  @media (max-width:880px){ .video-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .video-grid{ grid-template-columns:1fr; } }
+  .video-grid[hidden]{ display:none; }
+
+  .video-card{ background:var(--navy); border:1px solid var(--line); overflow:hidden; transition:transform .3s, border-color .3s; }
+  .video-card:hover{ transform:translateY(-5px); border-color:var(--cream); }
+  .video-thumb-wrap{ position:relative; aspect-ratio:16/9; background:var(--navy-soft); cursor:pointer; overflow:hidden; }
+  .video-thumb-wrap img{ width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+  .video-card:hover .video-thumb-wrap img{ transform:scale(1.06); }
+  .play-badge{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.4)); }
+  .play-badge svg{ width:50px; height:50px; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.4)); transition:transform .25s; }
+  .video-card:hover .play-badge svg{ transform:scale(1.1); }
+  .video-info{ padding:18px 20px 22px; }
+  .video-info h3{ font-family:var(--display); font-style:italic; font-weight:500; font-size:1.08rem; color:var(--white); margin-bottom:6px; }
+  .video-info p{ font-size:0.8rem; color:var(--ink-soft); }
+
+  .channel-note{
+    margin-top:40px; padding:20px 26px; border:1px dashed var(--line);
+    font-size:0.85rem; color:var(--ink-soft); background:rgba(232,217,181,0.04);
+  }
+  .channel-note code{ color:var(--cream); font-weight:700; }
+
+  .lightbox{
+    position:fixed; inset:0; z-index:200; background:rgba(2,6,12,0.94);
+    display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox-inner{ width:100%; max-width:920px; aspect-ratio:16/9; position:relative; }
+  .lightbox-inner iframe{ width:100%; height:100%; border:0; }
+  .lightbox-close{ position:absolute; top:-46px; right:0; background:none; border:none; color:#fff; font-size:1.8rem; cursor:pointer; }
+
+  /* ===================== ONDE ATENDEMOS / MAPA ===================== */
+  #atendemos .map-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;
+  }
+  .map-text .stroke-rule{ margin:0 0 22px; }
+  .map-text h2{
+    font-family:var(--display); font-style:italic; font-weight:500;
+    font-size:clamp(1.9rem, 4vw, 2.6rem); color:var(--white); margin-bottom:18px;
+  }
+  .map-text p{ color:var(--ink-soft); font-size:1.02rem; margin-bottom:14px; max-width:460px; }
+  .map-tagline{
+    font-family:var(--display); font-style:italic; font-size:1.5rem; color:var(--cream); margin-top:18px;
+  }
+  .map-wrap{ position:relative; }
+  .map-wrap svg{ width:100%; height:auto; }
+  .map-pin{ cursor:default; }
+  .map-pin .pulse{
+    animation:pinPulse 2.4s ease-out infinite;
+    transform-origin:center;
+  }
+  .map-pin.pin-mg .pulse{ animation-delay:0s; }
+  .map-pin.pin-sp .pulse{ animation-delay:1.2s; }
+  @keyframes pinPulse{
+    0%{ transform:scale(0.5); opacity:0.7; }
+    70%{ transform:scale(2.6); opacity:0; }
+    100%{ transform:scale(2.6); opacity:0; }
+  }
+  .map-label{
+    font-family:var(--body); font-weight:700; font-size:11px; fill:var(--cream);
+    letter-spacing:0.04em;
+  }
+
+  @media (max-width:880px){ #atendemos .map-grid{ grid-template-columns:1fr; gap:48px; } }
+
+  /* ===================== CONTATO ===================== */
+  #contato{ text-align:center; }
+  #contato .section-head{ margin-bottom:40px; }
+  .cta-block{
+    max-width:560px; margin:0 auto;
+    background:linear-gradient(155deg, var(--navy-soft), var(--navy));
+    border:1px solid var(--line);
+    padding:56px 44px;
+  }
+  .cta-block p{ color:var(--ink-soft); margin-bottom:30px; font-size:1.02rem; }
+  .cta-block .btn{ width:100%; justify-content:center; font-size:0.92rem; padding:18px 30px; }
+
+  .social-row{ display:flex; gap:14px; justify-content:center; margin-top:32px; flex-wrap:wrap; }
+  .social-row a{
+    border:1px solid var(--line); padding:11px 22px; font-size:0.84rem; font-weight:600;
+    display:inline-flex; align-items:center; gap:8px; transition:border-color .2s, color .2s;
+  }
+  .social-row a:hover{ border-color:var(--cream); color:var(--cream); }
+  .social-row svg{ width:16px; height:16px; }
+
+  footer{
+    padding:48px 0 36px; text-align:center; border-top:1px solid var(--line);
+    color:var(--ink-soft); font-size:0.82rem; background:var(--navy-deep);
+  }
+  footer img{ height:28px; margin:0 auto 14px; opacity:.9; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#topo"><img src="assets/logo-cream.png" alt="Dupla Filmes" class="brand-logo"></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#historia">Nossa História</a>
+      <a href="#videos">Portfólio</a>
+      <a href="#valores">Valores</a>
+      <a href="#atendemos">Onde Atendemos</a>
+      <a href="https://wa.me/5535997201718?text=Ol%C3%A1!%20Quero%20eternizar%20minha%20hist%C3%B3ria%20com%20a%20Dupla%20Filmes." target="_blank" rel="noopener" class="nav-cta">Quero Eternizar</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="topo">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline poster="assets/cover_frame.jpg">
+      <source src="assets/hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-inner">
+    <div class="eyebrow">Filmes de casamento</div>
+    <h1>Filmes de casamento para <em>sentir tudo de novo.</em></h1>
+    <p class="lede">Somos um casal contando a história de outro casal. Existem momentos que acontecem uma única vez, nossa missão é fazer com que eles possam ser vividos para sempre.</p>
+    <div class="hero-ctas">
+      <a href="#videos" class="btn btn-cream">Ver portfólio</a>
+      <a href="https://wa.me/5535997201718?text=Ol%C3%A1!%20Quero%20eternizar%20minha%20hist%C3%B3ria%20com%20a%20Dupla%20Filmes." target="_blank" rel="noopener" class="btn btn-line">Quero eternizar minha história</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NOSSA HISTÓRIA ===================== -->
+<section id="historia">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Quem somos</span>
+      <h2>Somos a Dupla Filmes</h2>
+    </div>
+
+    <div class="story-grid">
+      <div class="story-photo">
+        <img src="assets/casal_bw_1.jpg" alt="Casal fundador da Dupla Filmes">
+      </div>
+      <div class="story-text">
+        <p>Mais do que filmar casamentos, acreditamos em guardar aquilo que o tempo nunca será capaz de repetir.</p>
+        <p>Somos um casal, há mais de <strong>8 anos</strong> dissemos "sim" diante de Deus e sabemos o quanto esse dia passa rápido. Talvez por isso enxerguemos cada casamento de uma forma diferente. Não estamos apenas registrando imagens, estamos preservando memórias que, um dia, terão um valor impossível de medir.</p>
+        <p>Cada olhar, cada abraço, cada lágrima, cada sorriso e cada pessoa presente fazem parte de uma história que merece ser lembrada exatamente como aconteceu.</p>
+        <p>Nosso propósito é transformar momentos reais em filmes que façam vocês sentir tudo outra vez, hoje, daqui a 10 anos e por toda a vida. Acreditamos que o casamento não é apenas um evento, é o início de um novo capítulo, e cada capítulo merece ser contado com verdade, emoção e sensibilidade.</p>
+        <p class="story-signoff">Sejam bem-vindos à Dupla Filmes.<br>Será uma alegria contar a história de vocês. 🤍</p>
+      </div>
+    </div>
+
+    <div class="photo-trio">
+      <img src="assets/casal_bw_2.jpg" alt="Dupla Filmes, retrato do casal">
+      <img src="assets/casal_bw_3.jpg" alt="Dupla Filmes, retrato em estúdio">
+      <img src="assets/casal_bw_1.jpg" alt="Dupla Filmes, retrato em close">
+    </div>
+  </div>
+</section>
+
+<!-- pull quote -->
+<section class="bg-soft" style="padding:0;">
+  <p class="story-pull">Existem momentos que acontecem uma única vez.<br>Nossa missão é fazer com que eles possam ser vividos para sempre.</p>
+</section>
+
+<!-- ===================== VALORES (princípios da marca) ===================== -->
+<section id="principios">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">O que nos guia</span>
+      <h2>Nossos valores</h2>
+    </div>
+    <div class="values-strip">
+      <div class="value-item">
+        <h4>Verdade</h4>
+        <p>Registramos o que realmente acontece, sem encenação. A emoção verdadeira é o que faz um filme ser revisto por toda a vida.</p>
+      </div>
+      <div class="value-item">
+        <h4>Sensibilidade</h4>
+        <p>Cada casal é único, e cada filme carrega o tom certo para a história que está sendo contada.</p>
+      </div>
+      <div class="value-item">
+        <h4>Presença discreta</h4>
+        <p>Vivam o dia. Nós cuidamos de registrar cada detalhe, sem nunca interromper o momento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PORTFÓLIO / VÍDEOS ===================== -->
+<section id="videos" class="bg-soft">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Portfólio</span>
+      <h2>Filmes que já eternizamos</h2>
+      <p>Uma seleção de casamentos que a Dupla Filmes teve a honra de eternizar.</p>
+    </div>
+
+    <div class="video-tabs">
+      <button class="video-tab active" data-tab="canal">Últimos do canal</button>
+      <button class="video-tab" data-tab="destaques">Destaques</button>
+    </div>
+
+    <div class="video-grid" id="grid-canal">
+      <p style="color:var(--ink-soft); font-size:0.9rem; grid-column:1/-1;">Carregando vídeos do canal…</p>
+    </div>
+
+    <div class="video-grid" id="grid-destaques" hidden></div>
+
+    <div class="channel-note">
+      Esta seção busca os vídeos automaticamente do canal <strong>@duplafilmescasamento</strong> através da YouTube Data API. Para os vídeos aparecerem aqui, gere uma <strong>API Key gratuita</strong> e cole no código (procure por <code>YOUTUBE_API_KEY</code>). O ID do canal já está configurado: <code>UCNeuBA4g4XIEHmI46bSyORQ</code>. Passo a passo completo no final desta conversa.
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar vídeo">✕</button>
+    <iframe id="lightboxFrame" src="" title="Player de vídeo" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- ===================== VALORES / INVESTIMENTO ===================== -->
+<section id="valores">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Investimento</span>
+      <h2>Valores</h2>
+      <p>Cada história é única, por isso o investimento é definido conversando sobre a data, o local e o formato do filme que vocês imaginam.</p>
+    </div>
+    <div style="text-align:center;">
+      <a href="https://wa.me/5535997201718?text=Ol%C3%A1!%20Quero%20eternizar%20minha%20hist%C3%B3ria%20com%20a%20Dupla%20Filmes.%20Pode%20me%20enviar%20os%20valores%3F" target="_blank" rel="noopener" class="btn btn-whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.74 13.4L3 21l3.71-1.27a8.9 8.9 0 0 0 5.33 1.71h.01a8.94 8.94 0 0 0 5.55-15.12zM12.05 19.9a7.4 7.4 0 0 1-3.78-1.04l-.27-.16-2.81.96.94-2.74-.18-.28a7.43 7.43 0 0 1 11.6-9.21 7.34 7.34 0 0 1 2.18 5.25 7.43 7.43 0 0 1-7.4 7.4zm4.07-5.56c-.22-.11-1.3-.64-1.5-.72-.2-.07-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.92-.34-1.75-1.08a6.56 6.56 0 0 1-1.21-1.5c-.13-.22-.01-.34.1-.45.11-.11.25-.28.37-.42.13-.14.17-.24.25-.4.08-.17.04-.31-.03-.43-.07-.11-.6-1.44-.82-1.97-.21-.51-.43-.44-.6-.45h-.51c-.17 0-.44.06-.67.31-.23.25-.89.87-.89 2.12s.92 2.46 1.04 2.63c.13.17 1.79 2.73 4.34 3.72 2.55.99 2.55.66 3.01.62.46-.04 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.1-.22-.16-.45-.27z"/></svg>
+        Solicitar valores pelo WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ONDE ATENDEMOS ===================== -->
+<section id="atendemos" class="bg-soft">
+  <div class="wrap">
+    <div class="map-grid">
+      <div class="map-text">
+        <div class="stroke-rule"></div>
+        <span class="eyebrow">Onde atendemos</span>
+        <h2>De Guaxupé para todo o Brasil.</h2>
+        <p>Nossa base é em Guaxupé, Minas Gerais, mas levamos a Dupla Filmes para onde a história de vocês estiver acontecendo. Atendemos com frequência casamentos em <strong style="color:var(--cream);">Minas Gerais</strong> e <strong style="color:var(--cream);">São Paulo</strong>, e viajamos para outros estados sempre que o convite chega.</p>
+        <p class="map-tagline">Onde o "sim" acontecer, a Dupla Filmes está lá.</p>
+      </div>
+
+      <div class="map-wrap">
+        <svg viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa estilizado de Minas Gerais e São Paulo, com Guaxupé em destaque">
+          <!-- forma estilizada MG -->
+          <path d="M120 40 L290 30 L320 90 L300 150 L330 190 L310 260 L260 280 L240 240 L190 250 L150 220 L100 230 L70 170 L90 110 Z"
+                fill="var(--navy-soft)" stroke="rgba(232,217,181,0.3)" stroke-width="1.5"/>
+          <!-- forma estilizada SP -->
+          <path d="M70 230 L260 280 L300 320 L320 380 L260 420 L160 410 L90 380 L50 320 L40 270 Z"
+                fill="var(--navy-soft)" stroke="rgba(232,217,181,0.3)" stroke-width="1.5"/>
+
+          <text x="230" y="150" class="map-label" text-anchor="middle" opacity="0.55">MINAS GERAIS</text>
+          <text x="190" y="360" class="map-label" text-anchor="middle" opacity="0.55">SÃO PAULO</text>
+
+          <!-- pino Guaxupé (MG) -->
+          <g class="map-pin pin-mg" transform="translate(165,205)">
+            <circle class="pulse" r="6" fill="var(--cream)" opacity="0.6"/>
+            <circle r="6" fill="var(--cream)"/>
+            <circle r="2.4" fill="var(--navy-deep)"/>
+            <text x="12" y="4" class="map-label" fill="var(--white)" opacity="1">Guaxupé</text>
+          </g>
+
+          <!-- pino região de SP -->
+          <g class="map-pin pin-sp" transform="translate(190,345)">
+            <circle class="pulse" r="6" fill="var(--royal)" opacity="0.6"/>
+            <circle r="6" fill="var(--royal)"/>
+            <circle r="2.4" fill="var(--navy-deep)"/>
+            <text x="12" y="4" class="map-label" fill="var(--white)" opacity="1">São Paulo</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTATO ===================== -->
+<section id="contato">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Vamos conversar</span>
+      <h2>Vamos eternizar a sua?</h2>
+    </div>
+
+    <div class="cta-block">
+      <p>Conte pra gente a data e o lugar do seu casamento. Respondemos rapidinho pelo WhatsApp.</p>
+      <a href="https://wa.me/5535997201718?text=Ol%C3%A1!%20Quero%20eternizar%20minha%20hist%C3%B3ria%20com%20a%20Dupla%20Filmes." target="_blank" rel="noopener" class="btn btn-whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.74 13.4L3 21l3.71-1.27a8.9 8.9 0 0 0 5.33 1.71h.01a8.94 8.94 0 0 0 5.55-15.12zM12.05 19.9a7.4 7.4 0 0 1-3.78-1.04l-.27-.16-2.81.96.94-2.74-.18-.28a7.43 7.43 0 0 1 11.6-9.21 7.34 7.34 0 0 1 2.18 5.25 7.43 7.43 0 0 1-7.4 7.4zm4.07-5.56c-.22-.11-1.3-.64-1.5-.72-.2-.07-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.92-.34-1.75-1.08a6.56 6.56 0 0 1-1.21-1.5c-.13-.22-.01-.34.1-.45.11-.11.25-.28.37-.42.13-.14.17-.24.25-.4.08-.17.04-.31-.03-.43-.07-.11-.6-1.44-.82-1.97-.21-.51-.43-.44-.6-.45h-.51c-.17 0-.44.06-.67.31-.23.25-.89.87-.89 2.12s.92 2.46 1.04 2.63c.13.17 1.79 2.73 4.34 3.72 2.55.99 2.55.66 3.01.62.46-.04 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.1-.22-.16-.45-.27z"/></svg>
+        Quero eternizar minha história
+      </a>
+    </div>
+
+    <div class="social-row">
+      <a href="https://www.instagram.com/duplafilmes_/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.youtube.com/@duplafilmescasamento" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
+        YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <img src="assets/logo-cream.png" alt="Dupla Filmes">
+  © <span id="year"></span> Dupla Filmes. Todos os direitos reservados.
+</footer>
+
+<script>
+  // ============ MENU MOBILE ============
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const playSvg = `<svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#1577B5"></path><path d="M45 24 27 14v20" fill="#fff"></path></svg>`;
+
+  // ============================================================
+  // DESTAQUES (opcional, lista editável manualmente)
+  // Troque "id" pelo ID do vídeo do YouTube (a parte depois de v= na URL)
+  // ============================================================
+  const VIDEOS_DESTAQUE = [
+    // { id: "VIDEO_ID_AQUI", titulo: "Casamento Nome & Nome", desc: "Cidade, Estado · 2025" },
+  ];
+
+  function thumbUrl(id){ return `https://img.youtube.com/vi/${id}/hqdefault.jpg`; }
+
+  function renderDestaques(){
+    const grid = document.getElementById('grid-destaques');
+    if (!VIDEOS_DESTAQUE.length){
+      grid.innerHTML = `<p style="color:var(--ink-soft); font-size:0.9rem; grid-column:1/-1;">Nenhum vídeo de destaque cadastrado ainda. Edite a lista <code>VIDEOS_DESTAQUE</code> no código.</p>`;
+      return;
+    }
+    grid.innerHTML = VIDEOS_DESTAQUE.map(v => `
+      <div class="video-card">
+        <div class="video-thumb-wrap" data-id="${v.id}" role="button" tabindex="0" aria-label="Assistir: ${v.titulo}">
+          <img src="${thumbUrl(v.id)}" alt="${v.titulo}" loading="lazy">
+          <div class="play-badge">${playSvg}</div>
+        </div>
+        <div class="video-info">
+          <h3>${v.titulo}</h3>
+          <p>${v.desc}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+  renderDestaques();
+
+  // ============ LIGHTBOX ============
+  const lightbox = document.getElementById('lightbox');
+  const lightboxFrame = document.getElementById('lightboxFrame');
+  document.addEventListener('click', (e) => {
+    const thumb = e.target.closest('.video-thumb-wrap');
+    if (thumb){
+      const id = thumb.dataset.id;
+      lightboxFrame.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      lightbox.classList.add('open');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    const thumb = document.activeElement.closest && document.activeElement.closest('.video-thumb-wrap');
+    if (thumb && (e.key === 'Enter' || e.key === ' ')){
+      e.preventDefault();
+      thumb.click();
+    }
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxFrame.src = ''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+  // ============ TABS ============
+  const tabs = document.querySelectorAll('.video-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('grid-canal').hidden = tab.dataset.tab !== 'canal';
+      document.getElementById('grid-destaques').hidden = tab.dataset.tab !== 'destaques';
+      if (tab.dataset.tab === 'canal') carregarVideosDoCanal();
+    });
+  });
+
+  // ============================================================
+  // VÍDEOS DO CANAL — via YouTube Data API v3
+  // O CHANNEL_ID da Dupla Filmes já está configurado.
+  // Falta só você gerar e colar sua própria API Key:
+  // 1. Acesse https://console.cloud.google.com/
+  // 2. Crie um projeto e ative a "YouTube Data API v3"
+  // 3. Gere uma API Key em "Credenciais" e cole abaixo
+  // ============================================================
+  const YOUTUBE_API_KEY = "COLE_SUA_API_KEY_AQUI";
+  const CHANNEL_ID = "UCNeuBA4g4XIEHmI46bSyORQ"; // canal @duplafilmescasamento
+  let canalCarregado = false;
+
+  async function carregarVideosDoCanal(){
+    if (canalCarregado) return;
+    const grid = document.getElementById('grid-canal');
+
+    if (YOUTUBE_API_KEY.startsWith("COLE_")){
+      grid.innerHTML = `<p style="color:var(--ink-soft); font-size:0.9rem; grid-column:1/-1;">
+        Falta configurar a <code>YOUTUBE_API_KEY</code> no código para esta lista carregar automaticamente os vídeos do canal real. O ID do canal já está pronto.
+      </p>`;
+      return;
+    }
+
+    try{
+      const url = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=9&type=video`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!data.items || !data.items.length){
+        grid.innerHTML = `<p style="color:var(--ink-soft);">Nenhum vídeo encontrado.</p>`;
+        return;
+      }
+
+      grid.innerHTML = data.items.map(item => {
+        const id = item.id.videoId;
+        const titulo = item.snippet.title;
+        const dataPub = new Date(item.snippet.publishedAt).toLocaleDateString('pt-BR');
+        return `
+          <div class="video-card">
+            <div class="video-thumb-wrap" data-id="${id}" role="button" tabindex="0" aria-label="Assistir: ${titulo}">
+              <img src="${item.snippet.thumbnails.high.url}" alt="${titulo}" loading="lazy">
+              <div class="play-badge">${playSvg}</div>
+            </div>
+            <div class="video-info">
+              <h3>${titulo}</h3>
+              <p>${dataPub}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+      canalCarregado = true;
+    } catch(err){
+      grid.innerHTML = `<p style="color:var(--ink-soft);">Não foi possível carregar os vídeos agora.</p>`;
+      console.error(err);
+    }
+  }
+  // tenta carregar já de início, já que "Últimos do canal" é a aba padrão
+  carregarVideosDoCanal();
+</script>
+
+</body>
+</html>
