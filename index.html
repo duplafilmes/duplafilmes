@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dupla Filmes — Filmes de Casamento</title>
 <meta name="description" content="Dupla Filmes. Um casal contando a história de outro casal. Filmes de casamento para sentir tudo de novo.">
+<link rel="icon" type="image/png" href="favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -204,7 +205,8 @@
 
   /* photo trio */
   .photo-trio{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:64px;
+    display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:64px;
+    max-width:680px; margin-left:auto; margin-right:auto;
   }
   .photo-trio img{ width:100%; aspect-ratio:4/5; object-fit:cover; }
   @media (max-width:760px){ .photo-trio{ grid-template-columns:1fr; max-width:380px; margin:48px auto 0; } }
@@ -239,8 +241,8 @@
   .play-badge{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.4)); }
   .play-badge svg{ width:50px; height:50px; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.4)); transition:transform .25s; }
   .video-card:hover .play-badge svg{ transform:scale(1.1); }
-  .video-info{ padding:18px 20px 22px; }
-  .video-info h3{ font-family:var(--display); font-style:italic; font-weight:500; font-size:1.08rem; color:var(--white); margin-bottom:6px; }
+  .video-info{ padding:18px 20px 20px; }
+  .video-info h3{ font-family:var(--display); font-style:italic; font-weight:500; font-size:1.08rem; color:var(--white); margin-bottom:0; }
   .video-info p{ font-size:0.8rem; color:var(--ink-soft); }
 
   .channel-note{
@@ -343,7 +345,7 @@
     </video>
   </div>
   <div class="hero-inner">
-    <div class="eyebrow">Filmes de casamento</div>
+    <div class="eyebrow">Dupla Filmes</div>
     <h1>Filmes de casamento para <em>sentir tudo de novo.</em></h1>
     <p class="lede">Somos um casal contando a história de outro casal. Existem momentos que acontecem uma única vez, nossa missão é fazer com que eles possam ser vividos para sempre.</p>
     <div class="hero-ctas">
@@ -367,7 +369,7 @@
       </div>
       <div class="story-text">
         <p>Mais do que filmar casamentos, acreditamos em guardar aquilo que o tempo nunca será capaz de repetir.</p>
-        <p>Somos um casal, há mais de <strong>8 anos</strong> dissemos "sim" diante de Deus e sabemos o quanto esse dia passa rápido. Talvez por isso enxerguemos cada casamento de uma forma diferente. Não estamos apenas registrando imagens, estamos preservando memórias que, um dia, terão um valor impossível de medir.</p>
+        <p>Somos um casal, há mais de <strong>8 anos</strong> dissemos "sim" diante de Deus e sabemos o quanto esse dia passa rápido. E é por isso enxerguemos cada casamento de uma forma diferente. Não estamos apenas registrando imagens, estamos preservando memórias que, um dia, terão um valor impossível de medir.</p>
         <p>Cada olhar, cada abraço, cada lágrima, cada sorriso e cada pessoa presente fazem parte de uma história que merece ser lembrada exatamente como aconteceu.</p>
         <p>Nosso propósito é transformar momentos reais em filmes que façam vocês sentir tudo outra vez, hoje, daqui a 10 anos e por toda a vida. Acreditamos que o casamento não é apenas um evento, é o início de um novo capítulo, e cada capítulo merece ser contado com verdade, emoção e sensibilidade.</p>
         <p class="story-signoff">Sejam bem-vindos à Dupla Filmes.<br>Será uma alegria contar a história de vocês. 🤍</p>
@@ -377,7 +379,6 @@
     <div class="photo-trio">
       <img src="casal_bw_2.jpg" alt="Dupla Filmes, retrato do casal">
       <img src="casal_bw_3.jpg" alt="Dupla Filmes, retrato em estúdio">
-      <img src="casal_bw_1.jpg" alt="Dupla Filmes, retrato em close">
     </div>
   </div>
 </section>
@@ -655,7 +656,6 @@
       grid.innerHTML = data.items.map(item => {
         const id = item.id.videoId;
         const titulo = item.snippet.title;
-        const dataPub = new Date(item.snippet.publishedAt).toLocaleDateString('pt-BR');
         return `
           <div class="video-card">
             <div class="video-thumb-wrap" data-id="${id}" role="button" tabindex="0" aria-label="Assistir: ${titulo}">
@@ -664,7 +664,6 @@
             </div>
             <div class="video-info">
               <h3>${titulo}</h3>
-              <p>${dataPub}</p>
             </div>
           </div>
         `;
