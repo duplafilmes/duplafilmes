@@ -425,10 +425,6 @@
     </div>
 
     <div class="video-grid" id="grid-destaques" hidden></div>
-
-    <div class="channel-note">
-      Esta seção busca os vídeos automaticamente do canal <strong>@duplafilmescasamento</strong> através da YouTube Data API. Para os vídeos aparecerem aqui, gere uma <strong>API Key gratuita</strong> e cole no código (procure por <code>YOUTUBE_API_KEY</code>). O ID do canal já está configurado: <code>UCNeuBA4g4XIEHmI46bSyORQ</code>. Passo a passo completo no final desta conversa.
-    </div>
   </div>
 </section>
 
@@ -636,7 +632,7 @@
 
     if (YOUTUBE_API_KEY.startsWith("COLE_")){
       grid.innerHTML = `<p style="color:var(--ink-soft); font-size:0.9rem; grid-column:1/-1;">
-        Falta configurar a <code>YOUTUBE_API_KEY</code> no código para esta lista carregar automaticamente os vídeos do canal real. O ID do canal já está pronto.
+        Em breve, novos filmes por aqui.
       </p>`;
       return;
     }
@@ -670,7 +666,7 @@
       }).join('');
       canalCarregado = true;
     } catch(err){
-      grid.innerHTML = `<p style="color:var(--ink-soft);">Não foi possível carregar os vídeos agora.</p>`;
+      grid.innerHTML = `<p style="color:var(--ink-soft);">Em breve, novos filmes por aqui.</p>`;
       console.error(err);
     }
   }
