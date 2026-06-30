@@ -63,6 +63,11 @@
     padding:14px 28px; max-width:1140px; margin:0 auto;
   }
   .brand-logo{ height:34px; opacity:0.96; }
+  .brand-text{
+    font-family:var(--display); font-style:italic; font-weight:600;
+    font-size:1.4rem; color:var(--cream); letter-spacing:0.01em;
+  }
+  footer .brand-text{ font-size:1.2rem; margin-bottom:14px; }
   .nav-links{
     display:flex; align-items:center; gap:34px; font-size:0.82rem; font-weight:600;
     letter-spacing:0.05em; text-transform:uppercase;
@@ -318,7 +323,7 @@
 
 <header>
   <nav class="nav">
-    <a href="#topo"><img src="logo-cream.png" alt="Dupla Filmes" class="brand-logo"></a>
+    <a href="#topo" class="brand-text">Dupla Filmes</a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
     <div class="nav-links" id="navLinks">
       <a href="#historia">Nossa História</a>
@@ -527,7 +532,7 @@
 </section>
 
 <footer>
-  <img src="logo-cream.png" alt="Dupla Filmes">
+  <p class="brand-text">Dupla Filmes</p>
   © <span id="year"></span> Dupla Filmes. Todos os direitos reservados.
 </footer>
 
